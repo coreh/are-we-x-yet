@@ -1,0 +1,17 @@
+{
+  "name": "are-we-x-yet",
+  "private": true,
+  "scripts": {
+    "prepublish": "mkdir -p build; babel -i selfContained -e *.es6 -d ."
+  },
+  "main": "index.js",
+  "dependencies": {
+    "chart.js": "1.0.1",
+    "express": "4.11.2",
+    "babel-runtime": "4.3.0",
+    "ejs": "2.2.4",
+    "pleasejs": "0.4.2",
+    "csv": "0.4.1",
+    "promise": "6.1.0"
+  }
+}

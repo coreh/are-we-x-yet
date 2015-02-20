@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<title>Are we <%= x %> yet?</title>
+<h1>Are we <%= x %> yet?</h1>
+<script src="Chart.js"></script>
+<script src="please.js"></script>
+<style>
+  body {
+    text-align: center;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  h1 {
+    font-weight: 100;
+  }
+  h2 {
+    font-weight: 200;
+  }
+</style>
+<script>
+  var colors = Please.make_color({ format: 'rgb', colors_returned: 100 });
+</script>
+<% for (var i = 0; i < benchmarks.length; i++) { %>
+  <h2><%= benchmarks[i].name %></h2>
+  <canvas id="chart-<%= i %>" width="720" height="300"></canvas>
+  <script>
+    var ctx = document.getElementById('chart-' + <%= i %>).getContext('2d');
+    var chart = new Chart(ctx).Line({
+      labels: <%- JSON.stringify(benchmarks[i].dates) %>,
+      datasets: [
+        <% for (var j = 0; j < benchmarks[i].contestants.length; j++) { %>
+        <%= (j == 0) ? '' : ',' %>
+          {
+            label: <%- JSON.stringify(benchmarks[i].contestants[j].name) %>,
+            fillColor: 'rgba(' + [colors[<%= j %>].r, colors[<%= j %>].g, colors[<%= j %>].b, 0.05] + ')',
+            strokeColor: 'rgba(' + [colors[<%= j %>].r, colors[<%= j %>].g, colors[<%= j %>].b, 1] + ')',
+            pointColor: 'rgba(' + [colors[<%= j %>].r, colors[<%= j %>].g, colors[<%= j %>].b, 1] + ')',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: 'rgba(' + [colors[<%= j %>].r, colors[<%= j %>].g, colors[<%= j %>].b, 1] + ')',
+            data: <%- JSON.stringify(benchmarks[i].contestants[j].values) %>,
+          }
+        <% } %>
+      ]
+    }, { multiTooltipTemplate: function(info) {
+      return info.datasetLabel + ": " +  info.value;
+    }, scaleBeginAtZero: true });
+  </script>
+<% } %>
