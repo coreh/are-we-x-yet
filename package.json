@@ -1,6 +1,12 @@
 {
   "name": "are-we-x-yet",
-  "private": true,
+  "version": "0.1.0",
+  "author": "Marco Aurelio",
+  "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/coreh/are-we-x-yet.git"
+  },
   "scripts": {
     "prepublish": "mkdir -p build; babel -i selfContained -e *.es6 -d ."
   },
